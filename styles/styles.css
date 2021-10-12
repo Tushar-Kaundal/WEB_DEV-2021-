@@ -52,10 +52,10 @@ p {
   background-color: #ff0006;
   color: white;
   position: absolute;
-  font-size: 16px;
+  font-size: 1.2em;
   bottom: -10px;
-  border-radius: 8px;
+  border-radius: 5px;
   border-width: 0;
   border-style: none;
-  left: 77px;
+  left: 72px;
 }
