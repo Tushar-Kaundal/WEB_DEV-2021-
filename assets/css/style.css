@@ -1,0 +1,265 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+header {
+  min-height: 300px;
+  background: url("../images/day.jpeg");
+  background-position: center;
+  background-size: cover;
+  transition: 0.5s ease-in;
+}
+body.dark {
+  background-color: black;
+}
+body.dark header {
+  background: url("../images/night.png");
+  background-position: center;
+  background-size: cover;
+  transition: 0.5s ease-out;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.container_1 {
+  position: absolute;
+  width: 450px;
+  min-height: 450px;
+  top: -200px;
+}
+.container_1 .head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 20px;
+}
+.list-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  border-radius: 5px;
+  background-color: white;
+  padding: 0px 10px;
+}
+body.dark .list-items {
+  background-color: #363636;
+}
+
+.list-items input,
+.list-items .list-inputs {
+  border: 0px;
+  font-weight: 300;
+  font-size: 1.2rem;
+  flex-grow: 90;
+  padding-left: 10px;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+body.dark .list-items input,
+body.dark .list-items .list-inputs,
+body.dark .todo-list .list-items {
+  color: white;
+}
+.list-items input:focus {
+  outline: none;
+  border: none;
+}
+
+.fas.fa-plus {
+  color: #4f4dde;
+}
+
+.fas.fa-plus:hover {
+  cursor: pointer;
+}
+.todo-list {
+  margin-top: 50px;
+  max-height: 500px;
+  overflow-y: scroll;
+  background-color: #fdfdfd;
+  border-radius: 10px;
+}
+
+body.dark .todo-list {
+  background-color: #1e1e1e;
+}
+.todo-list .list-items {
+  margin: 10px;
+  color: gray;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0px 18px 36px -18px rgba(0, 0, 0, 0.75);
+}
+
+.items .list-items {
+  margin: 5px;
+}
+/* checkbox */
+#toggle,
+.check {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+label.tog {
+  width: 70px;
+  height: 35px;
+  background-color: white;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  transition: 0.3s ease-in-out;
+}
+
+label.tog::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 25px;
+  height: 25px;
+  background-color: #f6d327;
+  border-radius: 50px;
+  transition: 0.3s ease-in-out;
+}
+
+footer {
+  background-color: #f1f1f1;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 1.2rem;
+}
+body.dark footer {
+  background-color: #292929;
+}
+footer a {
+  color: #4f4dde;
+  text-decoration: none;
+}
+footer i {
+  margin: 0px 10px;
+}
+footer i.fa-instagram {
+  color: #d6249f;
+}
+footer i.fa-linkedin {
+  color: dodgerblue;
+}
+
+footer i.fa-github {
+  color: black;
+}
+body.dark footer i.fa-github {
+  color: white;
+}
+.list-tags {
+  display: flex;
+}
+.list-tags div {
+  margin: 0px 5px;
+}
+.active {
+  color: #4f4dde;
+}
+
+.clear:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.circle {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  margin: 10px auto;
+  background: transparent;
+}
+
+.circle label {
+  position: absolute;
+  top: 2px;
+  left: 1.5px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  top: 4px;
+  left: 4px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    hsla(339, 100%, 55%, 1) 21%,
+    hsla(197, 100%, 64%, 1) 93%
+  );
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.circle label i {
+  position: absolute;
+  color: #fcfff4;
+  text-align: center;
+  opacity: 0.2;
+  font-size: 12px;
+}
+.circle label i:hover {
+  opacity: 1;
+}
+.list-items i {
+  margin: 4px;
+  font-size: 1.2rem;
+}
+
+.list-items i.fa-times {
+  opacity: 0;
+  transition: 0.3s ease;
+}
+.list-items:hover i.fa-times {
+  opacity: 1;
+}
+
+.list-items i.fa-times:hover {
+  color: red;
+}
+
+input#toggle:checked + label.tog::after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+input#toggle:checked + label.tog::after {
+  background-color: #e63e6d;
+}
+input#toggle:checked + label.tog {
+  background-color: black;
+}
+.circle label i.checked {
+  opacity: 1;
+}
+.items .list-items.hidden {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+}
+.strike {
+  text-decoration: line-through;
+}
