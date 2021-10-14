@@ -4,7 +4,7 @@ let response = fetch("https://jsonplaceholder.typicode.com/users")
   .then((data) => {
     data.forEach((element) => {
       var child = document.createElement("li");
-      var text = document.createTextNode(element.name);
+      var text = document.createTextNode(`${element.name}-${element.email}`);
       child.appendChild(text);
       ul.appendChild(child);
     });
