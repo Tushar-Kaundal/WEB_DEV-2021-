@@ -1,20 +1,9 @@
-var Switch = document.querySelector("#toggle");
-var body = document.querySelector("body");
-var add = document.querySelector(".fa-plus");
-var cross = document.querySelector(".cross-1");
-var list = document.querySelector("ol");
-var inputs = document.querySelector("#input-text");
-var counter = document.querySelector(".count");
-var all = document.querySelector("#all");
-var pending = document.querySelector("#pending");
-var complete = document.querySelector("#complete");
-var clear = document.querySelector(".clear");
-var count = document.querySelector(".count");
+const select = (item) => document.querySelector(item);
+const Class = (item) => document.querySelector(item).classList;
 
-var arll = [];
 var tags = "all";
-Switch.addEventListener("click", () => {
-  body.classList.toggle("dark");
+select("#toggle").addEventListener("click", () => {
+  Class("body").toggle("dark");
 });
 
 const getSet = (req, item = []) => {
@@ -29,30 +18,28 @@ const getSet = (req, item = []) => {
 function queries(id) {
   const task = getSet("get");
   if (task[id].status) {
-    document.querySelector(`#toggle${id}`).checked = true;
-    document.querySelector(`#tog${id} i`).classList.add("checked");
-    document.querySelector(`#list${id} .list-inputs`).classList.add("strike");
+    select(`#toggle${id}`).checked = true;
+    Class(`#tog${id} i`).add("checked");
+    Class(`#list${id} .list-inputs`).add("strike");
   }
-  document.querySelector(`.cross-${id}`).addEventListener("click", () => {
+  select(`.cross-${id}`).addEventListener("click", () => {
     deleteElement(id);
   });
-  document.querySelector(`#toggle${id}`).addEventListener("click", () => {
-    if (document.querySelector(`#toggle${id}`).checked) {
+  select(`#toggle${id}`).addEventListener("click", () => {
+    if (select(`#toggle${id}`).checked) {
       task[id] = { ...task[id], status: 1 };
 
-      document.querySelector(`#tog${id} i`).classList.add("checked");
-      document.querySelector(`#list${id} .list-inputs`).classList.add("strike");
+      Class(`#tog${id} i`).add("checked");
+      Class(`#list${id} .list-inputs`).add("strike");
     } else {
       task[id] = { ...task[id], status: 0 };
 
-      document.querySelector(`#tog${id} i`).classList.remove("checked");
-      document
-        .querySelector(`#list${id} .list-inputs`)
-        .classList.remove("strike");
+      Class(`#tog${id} i`).remove("checked");
+      Class(`#list${id} .list-inputs`).remove("strike");
     }
     if (tags === "complete" || tags === "pending") {
-      document.querySelector(`#list${id}`).remove();
-      count.innerHTML = `${list.childElementCount} items`;
+      select(`#list${id}`).remove();
+      select(".count").innerHTML = `${select("ol").childElementCount} items`;
     }
     getSet("set", task);
   });
@@ -71,7 +58,7 @@ function addElement(val, id) {
       <div class="list-inputs">${val.text}</div>
       <i class="fas fa-times cross-${id}" aria-hidden="true"></i>
     `;
-  list.append(el);
+  select("ol").append(el);
   queries(id);
 }
 function showlist(action) {
@@ -92,24 +79,23 @@ function showlist(action) {
       }
     }
   });
-  count.innerHTML = `${list.childElementCount} items`;
+  select(".count").innerHTML = `${select("ol").childElementCount} items`;
 }
 function removelist(action) {
   if (action === "clear" || action === "delete") {
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
+    while (select("ol").firstChild) {
+      select("ol").removeChild(select("ol").firstChild);
     }
   }
   if (action === "delete") {
-    arll = [];
     getSet("set", []);
   }
-  count.innerHTML = `${list.childElementCount} items`;
+  select(".count").innerHTML = `${select("ol").childElementCount} items`;
 }
 
-add.addEventListener("click", () => {
+select(".fa-plus").addEventListener("click", () => {
   var task = getSet("get") ? getSet("get") : [];
-
+  const inputs = select("#input-text");
   const result = task.find(({ text }) => text === inputs.value) ? 1 : 0;
 
   if (inputs.value === "") {
@@ -130,31 +116,31 @@ add.addEventListener("click", () => {
   inputs.value = "";
 });
 
-all.addEventListener("click", () => {
+select("#all").addEventListener("click", () => {
   tags = "all";
-  all.classList.add("active");
-  pending.classList.remove("active");
-  complete.classList.remove("active");
+  Class("#all").add("active");
+  Class("#pending").remove("active");
+  Class("#complete").remove("active");
   showlist(tags);
 });
 
-pending.addEventListener("click", () => {
+select("#pending").addEventListener("click", () => {
   tags = "pending";
-  pending.classList.add("active");
-  all.classList.remove("active");
-  complete.classList.remove("active");
+  Class("#pending").add("active");
+  Class("#all").remove("active");
+  Class("#complete").remove("active");
   showlist(tags);
 });
 
-complete.addEventListener("click", () => {
+select("#complete").addEventListener("click", () => {
   tags = "complete";
-  complete.classList.add("active");
-  pending.classList.remove("active");
-  all.classList.remove("active");
+  Class("#complete").add("active");
+  Class("#pending").remove("active");
+  Class("#all").remove("active");
   showlist(tags);
 });
 
-clear.addEventListener("click", () => removelist("delete"));
+select(".clear").addEventListener("click", () => removelist("delete"));
 
 function deleteElement(id) {
   var task = getSet("get");
