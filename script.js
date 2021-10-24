@@ -17,8 +17,18 @@ Switch.addEventListener("click", () => {
   body.classList.toggle("dark");
 });
 
+const getSet = (req, item = []) => {
+  if (req === "get") {
+    return JSON.parse(localStorage.getItem("task"));
+  }
+  if (req === "set") {
+    localStorage.setItem("task", JSON.stringify(item));
+  }
+};
+
 function queries(id) {
-  if (arll[id].status) {
+  const task = getSet("get");
+  if (task[id].status) {
     document.querySelector(`#toggle${id}`).checked = true;
     document.querySelector(`#tog${id} i`).classList.add("checked");
     document.querySelector(`#list${id} .list-inputs`).classList.add("strike");
@@ -28,11 +38,12 @@ function queries(id) {
   });
   document.querySelector(`#toggle${id}`).addEventListener("click", () => {
     if (document.querySelector(`#toggle${id}`).checked) {
-      arll[id].status = 1;
+      task[id] = { ...task[id], status: 1 };
+
       document.querySelector(`#tog${id} i`).classList.add("checked");
       document.querySelector(`#list${id} .list-inputs`).classList.add("strike");
     } else {
-      arll[id].status = 0;
+      task[id] = { ...task[id], status: 0 };
 
       document.querySelector(`#tog${id} i`).classList.remove("checked");
       document
@@ -43,6 +54,7 @@ function queries(id) {
       document.querySelector(`#list${id}`).remove();
       count.innerHTML = `${list.childElementCount} items`;
     }
+    getSet("set", task);
   });
 }
 function addElement(val, id) {
@@ -63,8 +75,9 @@ function addElement(val, id) {
   queries(id);
 }
 function showlist(action) {
+  const task = getSet("get");
   removelist("clear");
-  arll.forEach((val, id) => {
+  task.forEach((val, id) => {
     if (action === "all") {
       addElement(val, id);
     }
@@ -89,12 +102,15 @@ function removelist(action) {
   }
   if (action === "delete") {
     arll = [];
+    getSet("set", []);
   }
   count.innerHTML = `${list.childElementCount} items`;
 }
 
 add.addEventListener("click", () => {
-  const result = arll.find(({ text }) => text === inputs.value) ? 1 : 0;
+  var task = getSet("get") ? getSet("get") : [];
+
+  const result = task.find(({ text }) => text === inputs.value) ? 1 : 0;
 
   if (inputs.value === "") {
     alert("Enter Something");
@@ -102,10 +118,11 @@ add.addEventListener("click", () => {
   }
 
   if (result === 0) {
-    arll.push({
+    task.push({
       text: inputs.value,
       status: 0,
     });
+    getSet("set", task);
     showlist(tags);
   } else {
     alert("task already exists");
@@ -140,6 +157,10 @@ complete.addEventListener("click", () => {
 clear.addEventListener("click", () => removelist("delete"));
 
 function deleteElement(id) {
-  arll.splice(id, 1);
+  var task = getSet("get");
+  task.splice(id, 1);
+  getSet("set", task);
   showlist(tags);
 }
+
+showlist(tags);
