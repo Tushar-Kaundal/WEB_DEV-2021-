@@ -163,4 +163,6 @@ function deleteElement(id) {
   showlist(tags);
 }
 
-showlist(tags);
+if (getSet("get") !== null) {
+  showlist(tags);
+}
