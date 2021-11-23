@@ -1,12 +1,12 @@
 const express = require("express");
+const database = require("./database/db");
 const app = express();
-const PORT = 4000;
-
+const PORT = 3000;
 app.use(express.json());
 
-app.get("/products/:cases", (req, res) => {
-  res.send(req.params);
-});
+database.products.push("iphone");
+
+console.log(database);
 
 app.listen(PORT, () => {
   console.log(`Server started at port ${PORT}`);
