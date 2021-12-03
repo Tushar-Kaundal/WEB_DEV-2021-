@@ -1,13 +1,35 @@
-import React from "react";
-import ListItem from "./ListItem";
+import React, { useEffect, useState } from "react";
 
 const Content = () => {
-  const chores = ["item 1", "item 2", "item 3", "item 4"];
+  const [counter, stateCounter] = useState(0);
+  const [content, setContent] = useState([]);
+  function handleClick() {
+    stateCounter(counter + 1);
+  }
+
+  const APICall = async () => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/photos");
+    const data = await res.json();
+    setContent(data);
+  };
+
+  useEffect(() => {
+    APICall();
+  }, []);
+
+  //APICall();
+
+  useEffect(() => {
+    console.log("mounted");
+  }, [counter]);
+
   return (
     <div className="container">
+      <h1>{counter}</h1>
+      <button onClick={handleClick}>Click Me</button>
       <ul>
-        {chores.map((chore) => (
-          <ListItem chore={chore} />
+        {content.map((item) => (
+          <li>{item.title}</li>
         ))}
       </ul>
     </div>
